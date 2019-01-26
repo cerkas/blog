@@ -1,1 +1,0 @@
-function initMap(){var e=new google.maps.LatLng(50.01391299396127,36.223726824788294),o={zoom:16,center:e},n=new google.maps.Map(document.getElementById("map"),o);new google.maps.Marker({position:e,title:"ХНЭУ"}).setMap(n)}

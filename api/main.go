@@ -44,9 +44,10 @@ func main() {
 		Methods("GET")*/
   m := martini.Classic()
   //posts = make(map[string]*models.Post,0)
- /* m.Post("/assets/",http.StripPrefix("./web/assets/",http.FileServer(http.Dir("./assets"))))
-  staticOptions := martini.StaticOptions{Prefix:"./web/assets"}
-  m.Use(martini.Static("/web/assets",staticOptions))*/
+  m.Post("/assets/",http.StripPrefix("/web/assets/",http.FileServer(http.Dir("./web/assets"))))
+  staticOptions := martini.StaticOptions{Prefix:"assets"}
+  m.Use(martini.Static("assets",staticOptions))
+
   m.Get("/", indexHandler)
   m.Post("/posts",createPost)
 	/*http.ListenAndServe(":8080", cors.AllowAll().Handler(r))
