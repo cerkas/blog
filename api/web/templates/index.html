@@ -1,6 +1,32 @@
 {{define "index"}}
         {{template "header"}}
-
+        <form id="form">
+            <input type="text"
+                   placeholder="New post..."
+                   id="post-input">
+        </form>
+        <div id="posts"></div>
+        <script>
+            $(document).ready(function() {
+                $.get('http://localhost:3000/posts', function(posts) {
+                    $list = $('#posts');
+                    for (var i = 0; i < posts.length; i++) {
+                        $list.append('<p>' + posts[i].text + '</p>');
+                    }
+                });
+                $('#form').submit(function(event) {
+                    event.preventDefault();
+                    var text = $('#post-input').val();
+                    $.post(
+                        'http://localhost:3000/posts',
+                        JSON.stringify({text: text}),
+                        function() {
+                            location.reload();
+                        }
+                    );
+                });
+            });
+        </script>
     <main id="main">
       <div class="container">
         <div class="content">

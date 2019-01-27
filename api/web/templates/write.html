@@ -4,18 +4,45 @@
 <main id="main">
     <div class="container">
         <div class="content">
-            <form role="form" method="POST" action="/SavePost">
-                 <input type="hidden" name="id" />
-                <div class="form-group">
-                     <label>Title</label>
-                    <input type="text" class="form-control" id="title" name="title">
-                </div>
-                <div class="form-group">
-                    <label>Content</label>
-                    <input type="text" class="form-control" id="content" name="content">
-                </div>
-                <button type="submit">Submit</button>
+            <form id="form">
+                <input type="text" id="post-title" placeholder="Title" >
+                <input type="file" id="post-image" >
+                <input type="text"
+                       placeholder="New post..."
+                       id="post-input">
+                <button type="submit">Send</button>
             </form>
+            <div id="posts"></div>
+            <script>
+                $(document).ready(function() {
+                    $.get('http://localhost:3000/posts', function(posts) {
+                        $list = $('#posts');
+                        for (var i = 0; i < posts.length; i++) {
+                            $list.append('<p>' + posts[i].text + '</p>');
+                        }
+                    });
+                    $('#form').submit(function(event) {
+                        event.preventDefault();
+                        var text = $('#post-input').val();
+                        var title = $('#post-title').val();
+                        var image = $('#post-image').val();
+                        console.log(image)
+                        $.post(
+                            'http://localhost:3000/posts',
+                            JSON.stringify(
+                                {
+                                    text: text,
+                                    title: title,
+                                    image : image
+                                },
+                                ),
+                            function() {
+                                location.reload();
+                            }
+                        );
+                    });
+                });
+            </script>
         </div>
     </div>
 </main>

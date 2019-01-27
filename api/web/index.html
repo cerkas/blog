@@ -10,9 +10,11 @@
 <body>
   <h1>Dockerized Posts</h1>
   <form id="form">
+    <input type="text" id="post-title"laceholder="Title">
     <input type="text"
            placeholder="New post..."
            id="post-input">
+    <button type="submit">Sent</button>
   </form>
   <div id="posts"></div>
   <script>
@@ -26,9 +28,11 @@
       $('#form').submit(function(event) {
         event.preventDefault();
         var text = $('#post-input').val();
+        var title = $('#post-title').val();
         $.post(
           'http://localhost:8080/posts',
-          JSON.stringify({text: text}),
+                JSON.stringify({text: text}),
+                JSON.stringify({title: title}),
           function() {
             location.reload();
           }
